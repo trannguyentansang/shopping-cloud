@@ -18,9 +18,11 @@
                                 <th>Email</th>
                                 <th>Joined</th>
                                 <th>Image </th>
-                                <th></th>
-                                <th colspan="2"><button class="btn btn-block btn-outline-success">Add</button></th>
-                                <th></th>
+                                <th colspan="2">
+                                    <a href="/user/adding">
+                                        <button class="btn btn-block btn-outline-success">Add</button>
+                                    </a>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,14 +32,14 @@
                                 <td>0903341473</td>
                                 <td>sang@gmail.com</td>
                                 <td>22/09/2020</td>
-                                <td><img width="100px" height="100px" src="/public/static/images/avatar-1.jpg"></td>
-                                <td> <i><u><a href="/product/id">More details </a></u></i>
+                                <td><img width="100px" src="/public/static/images/avatar-1.jpg"></td>
+                                <td>
+                                    <a href="/user/editing">
+                                        <button class="btn btn-block btn-dark">Details & Edit</button>
+                                    </a>
                                 </td>
-                                <td><button class="btn btn-block btn-dark">Edit</button></td>
                                 <td><button class="btn btn-block btn-outline-danger"
                                         onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Deactive</button></td>
-                                        
-                                <th><button class="btn btn-block btn-outline-primary">Grant pers</button></th>
                             </tr>
                         </tbody>
                     </table>
