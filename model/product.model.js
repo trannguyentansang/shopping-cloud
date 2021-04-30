@@ -5,7 +5,7 @@ var proSchema = new mongoose.Schema({
     proQty: Number,
     proSold:Number,
     proStatus: Boolean,
-    proDateCreated: String,
+    proDateCreated: Date,
     proDateModified: String,
     category: {},
     proImage: String,

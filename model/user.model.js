@@ -8,7 +8,8 @@ var userSchema = new mongoose.Schema({
     status: Boolean,
     permission: {},
     avatar: String,
-    joined: String
+    joined: String,
+    password:String
 });
 
 const User = mongoose.model('User', userSchema, 'user')

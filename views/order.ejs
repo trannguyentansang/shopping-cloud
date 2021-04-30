@@ -15,6 +15,7 @@
                                 <th>#</th>
                                 <th>Customer Name </th>
                                 <th>Date</th>
+                                <th>Total</th>
                                 <th></th>
                                 <th colspan="2">
                                     <!--<a href="/order/adding">
@@ -24,16 +25,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td> <a href="/user/id">Mark</a></td>
-                                <td>22/09/2020</td>
-                                <td> <i><u><a href="/order/details">Order details </a></u></i>
-                                </td>
-                                <td><button class="btn btn-block btn-primary">Accept</button></td>
-                                <td><button class="btn btn-block btn-outline-danger"
-                                        onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Cancel</button></td>
-                            </tr>
+                            <%orders.forEach((order)=>{%>
+                                <tr>
+                                    <th scope="row"><%=order.id%></th>
+                                    <td><%=order.customer.username%></td>
+                                    <td><%=order.date%></td>
+                                    <td><%=order.total%></td>
+                                    <td> <i><u><a href="/admin/order/details?id=<%=order.id%>">Order details </a></u></i>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/order/accept?id=<%=order.id%>">
+                                            <button class="btn btn-block btn-primary">Accept</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/admin/order/cancel?id=<%=order.id%>">
+                                            <button class="btn btn-block btn-outline-danger"
+                                            onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Cancel</button>
+                                        </a>
+                                    </td>
+                                </tr>    
+                            <%})%>
                         </tbody>
                     </table>
                 </div>

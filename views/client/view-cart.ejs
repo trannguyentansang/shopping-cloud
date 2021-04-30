@@ -1,0 +1,49 @@
+<div class="span9">
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a> <span class="divider">/</span></li>
+        <li class="active"> SHOPPING CART</li>
+    </ul>
+    <h3> SHOPPING CART<a href="/" class="btn btn-large pull-right"><i
+                class="icon-arrow-left"></i> Continue Shopping </a></h3>
+    <hr class="soft" />
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            <%var total = 0%>
+            <%cart.forEach(item=>{%>
+                <tr>
+                    <td> <img width="60" src="<%=item.product.proImage%>" alt="" /></td>
+                    <td><%=item.product.proName%></td>
+                    <td><%=item.qty%></td>
+                    <td><%=item.product.proPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%></td>
+                    <td><%=Math.ceil((item.product.proPrice*((item.product.proDiscount)/100))).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> (<%=item.product.proDiscount%>%)</td>
+                    <td><%total =total+ (item.product.proPrice*((100-item.product.proDiscount)/100)*item.qty)%>
+                        <%=Math.ceil((item.product.proPrice*((100-item.product.proDiscount)/100)*item.qty)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%>
+                    </td>
+                </tr>    
+            <%})%>
+
+            <tr>
+                <td colspan="5" style="text-align:right">SHIPPING FEE: </td>
+                <td> 50,000</td>
+            </tr>
+            <tr>
+                <td colspan="5" style="text-align:right"><strong>TOTAL =</strong>
+                </td>
+                <td class="label label-important" style="display:block"> <strong> <%=Math.ceil(total+50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> </strong></td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="/" class="btn btn-large"><i class="icon-arrow-left"></i> Continue Shopping </a>
+    <a href="#" class="btn btn-large pull-right">Next <i class="icon-arrow-right"></i></a>
+
+</div>

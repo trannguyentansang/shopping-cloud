@@ -64,7 +64,7 @@
                 <div class="col-sm-12">
                     <!-- Authentication card start-->
                     <div class="login-card card-block auth-body mr-auto ml-auto">
-                        <form class="md-float-material">
+                        <form method="POST" action="/auth/login" class="md-float-material">
                             <div class="text-center"><img src="/public/static/images/auth/logo-dark.png" alt="logo.png">
                             </div>
                             <div class="auth-box">
@@ -73,18 +73,15 @@
                                         <h3 class="text-left txt-primary">Sign In</h3>
                                     </div>
                                 </div>
+                                <%if(locals.message){%>
+                                    <div class="bg-warning p-10"><%=message%></div>    
+                                <%}%>
                                 <hr>
-                                <div class="input-group"><input class="form-control" type="email"
-                                        placeholder="Your Email Address"><span class="md-line"></span></div>
+                                <div class="input-group"><input class="form-control" type="text"
+                                        placeholder="Phone or Username" name="username"><span class="md-line"></span></div>
                                 <div class="input-group"><input class="form-control" type="password"
-                                        placeholder="Password"><span class="md-line"></span></div>
+                                        placeholder="Password" name="password"><span class="md-line"></span></div>
                                 <div class="row m-t-25 text-left">
-                                    <div class="col-sm-7 col-xs-12">
-                                        <div class="checkbox-fade fade-in-primary"><label><input type="checkbox"
-                                                    value=""><span class="cr"><i
-                                                        class="cr-icon icofont icofont-ui-check txt-primary"></i></span><span
-                                                    class="text-inverse">Remember me</span></label></div>
-                                    </div>
                                     <div class="col-sm-5 col-xs-12 forgot-phone text-right"><a
                                             class="text-right f-w-600 text-inverse" href="auth-reset-password.html">
                                             Forgot Your Password?</a></div>
@@ -92,7 +89,7 @@
                                 <div class="row m-t-30">
                                     <div class="col-md-12"><button
                                             class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
-                                            type="button">Sign in</button></div>
+                                            type="submit">Sign in</button></div>
                                 </div>
                                 <hr>
                                 <div class="row">
