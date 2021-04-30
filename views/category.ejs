@@ -15,7 +15,7 @@
                                 <th>Name</th>
                                 <th>Image</th>
                                 <th colspan="2">
-                                    <a href="/category/adding">
+                                    <a href="/admin/category/adding">
                                         <button class="btn btn-block btn-outline-success">Add</button>
                                     </a>
                                 </th>
@@ -27,13 +27,13 @@
                                     <td><%=cat.catName%></td>
                                     <td><img width="100px" src="<%=cat.catImage%>"></td>
                                     <td>
-                                        <a href="/category/editing?id=<%=cat._id%>">
+                                        <a href="/admin/category/editing?id=<%=cat._id%>">
                                             <button class="btn btn-block btn-dark">Edit</button>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/category/deleting?id=<%=cat._id%>">
-                                            <button class="btn btn-block btn-outline-danger" onclick="confirm('Are you sure to remove?')">Remove</button>
+                                        <a href="/admin/category/deleting?id=<%=cat._id%>">
+                                            <button class="btn btn-block btn-outline-danger" onclick=" return confirm('Are you sure to remove?')">Remove</button>
                                         </a>
                                     </td>
                                 </tr>

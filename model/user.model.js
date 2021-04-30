@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Permission = require('./permission.model')
 var userSchema = new mongoose.Schema({
     username: String,
     fullname: String,
@@ -7,7 +6,7 @@ var userSchema = new mongoose.Schema({
     phone: String,
     address: String,
     status: Boolean,
-    permission: Permission,
+    permission: {},
     avatar: String,
     joined: String
 });

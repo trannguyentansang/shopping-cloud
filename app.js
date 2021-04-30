@@ -31,13 +31,13 @@ catch(err){
 
 //register static files
 app.use("/public", express.static('./public'))
-//redirect
-app.use('/', homeRouter)
-app.use('/auth', authRouter)
-app.use('/category', categoryRouter)
-app.use('/product', productRouter)
-app.use('/user', userRouter)
-app.use('/order', orderRouter)
+//redirect admin
+app.use('/admin', homeRouter)
+app.use('/admin/auth', authRouter)
+app.use('/admin/category', categoryRouter)
+app.use('/admin/product', productRouter)
+app.use('/admin/user', userRouter)
+app.use('/admin/order', orderRouter)
 
 //open port
 app.listen(process.env.PORT_SERVER, ()=>{

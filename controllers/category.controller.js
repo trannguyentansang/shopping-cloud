@@ -23,7 +23,7 @@ module.exports.postAdding = (req, res)=>{
         }
         console.log(newcat.catName + " saved in database!")
     })
-    res.redirect("/category")
+    res.redirect("/admin/category")
 }
 module.exports.postEditing = (req, res)=>{
     Category.findOne({_id:req.body.catId}, (err, cat)=>{
@@ -45,13 +45,14 @@ module.exports.postEditing = (req, res)=>{
                     }
                     else{
                         console.log(cat.catName+" was updated in database")
-                        res.redirect('/category')
+                        res.redirect('/admin/category')
                     }
                 })
             }
         }
     })
 }
-module.exports.deleting = (req, res)=>{
-    Category.deleteOne({_id:req.query.id})
+module.exports.deleting = async (req, res)=>{
+    await Category.deleteOne({_id:req.query.id})
+    res.redirect('/admin/category')
 }

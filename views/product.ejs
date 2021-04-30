@@ -19,7 +19,7 @@
                                 <th>Date Modified</th>
                                 <th>Image </th>
                                 <th colspan="2">
-                                    <a href="/product/adding">
+                                    <a href="/admin/product/adding">
                                         <button class="btn btn-block btn-outline-success">Add</button>
                                     </a>
                                 </th>
@@ -32,7 +32,7 @@
                                     <td><%=pro.proName%></td>
                                     <td><%=pro.proPrice%></td>
                                     <td><%=pro.proQty%>
-                                        <a href="/product/stockin?id=<%=pro.id%>"><b><i><u>Stock in</u></i></b></a>
+                                        <a href="/admin/product/stockin?id=<%=pro.id%>"><b><i><u>Stock in</u></i></b></a>
                                     </td>
                                     <td><%=pro.proDateCreated%></td>
                                     <td><%=pro.proDateModified%></td>
@@ -40,14 +40,14 @@
                                         <img width="100px" src="<%=pro.proImage%>">
                                     </td>
                                     <td>
-                                        <a href="/product/editing?id=<%=pro.id%>">
+                                        <a href="/admin/product/editing?id=<%=pro.id%>">
                                             <button class="btn btn-block btn-dark">Details & Edit</button>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/product/deleting?id=<%=pro.id%>">
+                                        <a href="/admin/product/deleting?id=<%=pro.id%>">
                                             <button class="btn btn-block btn-outline-danger"
-                                            onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Remove</button>
+                                            onclick="return confirm('This product will be moved to trash, you can recover it whenever you want!')">Remove</button>
                                         </a>
                                     </td>
                                 </tr>

@@ -47,7 +47,7 @@ module.exports.postAdding = async (req, res)=>{
             return
         }
         console.log(newpro.proName + " saved in database!")
-        res.redirect("/product")
+        res.redirect("/admin/product")
     })
 }
 module.exports.postEditing = (req, res)=>{
@@ -75,7 +75,7 @@ module.exports.postEditing = (req, res)=>{
                 return
             }
             console.log(pro.proName + " updated in database!")
-            res.redirect("/product")
+            res.redirect("/admin/product")
         })
     })
 }
@@ -88,7 +88,7 @@ module.exports.deleting = (req, res)=>{
                 return
             }
             console.log(pro.proName + " moved to trash!")
-            res.redirect("/product")
+            res.redirect("/admin/product")
         })
     })
 }
@@ -105,7 +105,7 @@ module.exports.recover = async (req, res)=>{
                 return
             }
             console.log(pro.proName + " moved to trash!")
-            res.redirect("/product/trash")
+            res.redirect("/admin/product/trash")
         })
     })
 }
@@ -122,7 +122,7 @@ module.exports.postStockin = async (req, res)=>{
                 res.status(500).send()
                 return
             }
-            res.redirect("/product")
+            res.redirect("/admin/product")
         })
     })
 }

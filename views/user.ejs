@@ -12,35 +12,45 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Full Name</th>
-                                <th>Phone Number</th>
+                                <th>Phone</th>
                                 <th>Email</th>
                                 <th>Joined</th>
                                 <th>Image </th>
                                 <th colspan="2">
-                                    <a href="/user/adding">
+                                    <a href="/admin/user/adding">
                                         <button class="btn btn-block btn-outline-success">Add</button>
                                     </a>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>0903341473</td>
-                                <td>sang@gmail.com</td>
-                                <td>22/09/2020</td>
-                                <td><img width="100px" src="/public/static/images/avatar-1.jpg"></td>
-                                <td>
-                                    <a href="/user/editing">
-                                        <button class="btn btn-block btn-dark">Details & Edit</button>
-                                    </a>
-                                </td>
-                                <td><button class="btn btn-block btn-outline-danger"
-                                        onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Deactive</button></td>
-                            </tr>
+                            <%users.forEach((user)=>{%>
+                                <tr>
+                                    <td><%=user.fullname%></td>
+                                    <td><%=user.phone%></td>
+                                    <td><%=user.email%></td>
+                                    <td><%=user.joined%></td>
+                                    <td><img width="100px" src="<%=user.avatar%>"></td>
+                                    <td>
+                                        <a href="/admin/user/editing?id=<%=user.id%>">
+                                            <button class="btn btn-block btn-dark">Details & Edit</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <%if(user.status){%>
+                                            <a href="/admin/user/deactivate?id=<%=user.id%>">
+                                                <button class="btn btn-block btn-outline-danger"
+                                                onclick="return confirm('When you deactive user, user cannot access to website by this account anymore!')">Deactive</button>
+                                            </a>
+                                        <%}else{%>
+                                            <a href="/admin/user/activate?id=<%=user.id%>">
+                                                <button class="btn btn-block btn-success">Active</button>
+                                            </a>
+                                        <%}%>
+                                    </td>
+                                </tr>
+                            <%})%>
                         </tbody>
                     </table>
                 </div>

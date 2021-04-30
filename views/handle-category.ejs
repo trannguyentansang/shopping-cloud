@@ -9,7 +9,7 @@
                         <div class="card-header">
                             <div class="card-block">
                                 <h4 class="sub-title"><%= action %> Category</h4>
-                                <form action="/category/<%=action%>" method="POST" enctype="multipart/form-data">
+                                <form action="/admin/category/<%=action%>" method="POST" enctype="multipart/form-data">
                                     <input name="catId" 
                                     <%if(locals.cat){%>
                                         value="<%=cat.id%>"
