@@ -19,7 +19,7 @@ const app = express()
 app.use(expressLayouts)
 app.set('layout', './views/layouts/commmon')
 app.set('view engine', 'ejs');
-app.use(bodyparser.urlencoded({extended:false}))
+app.use(bodyparser.urlencoded({extended:true}))
 app.use(bodyparser.json())
 try{
 	mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
