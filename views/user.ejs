@@ -12,9 +12,9 @@
                     <table class="table">
                         <thead>
                             <tr>
+                                <th>Username</th>
                                 <th>Full Name</th>
                                 <th>Phone</th>
-                                <th>Email</th>
                                 <th>Joined</th>
                                 <th>Image </th>
                                 <th colspan="2">
@@ -27,9 +27,9 @@
                         <tbody>
                             <%users.forEach((user)=>{%>
                                 <tr>
+                                    <td><%=user.username%></td>
                                     <td><%=user.fullname%></td>
                                     <td><%=user.phone%></td>
-                                    <td><%=user.email%></td>
                                     <td><%=user.joined%></td>
                                     <td><img width="100px" src="<%=user.avatar%>"></td>
                                     <td>

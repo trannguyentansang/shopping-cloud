@@ -7,9 +7,24 @@ const date = require('date-and-time')
 module.exports.proByCat = async (req, res)=>{
     var cat = await Category.findOne({_id: req.query.catId, status: true})
     var pros = await Product.find({category: cat})
-    var cats = await Category.find()
+    var cats = await Category.find({status:true})
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('client/products-by-category', {layout: './layouts/client-common', pros: pros, cats:cats, cat:cat, cart: req.signedCookies.cart, user: user})
+}
+module.exports.search = async (req, res)=>{
+    var search = req.query.search
+    var cat = req.query.cat
+    var pros = null
+    if(cat=="all"){
+        pros = await Product.find({proName: new RegExp(search.toLowerCase(),'i'), proStatus: true})
+    }else{
+        Category.findOne({_id:cat}, async (err, cate)=>{
+            pros = await Product.find({proName: new RegExp(search.toLowerCase(),'i'), proStatus: true, category: cate})
+        })
+    }
+    var cats = await Category.find({status:true})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('client/products-search', {layout: './layouts/client-common', pros: pros, cats:cats, cart: req.signedCookies.cart, user: user})
 }
 module.exports.productDetails = async (req, res)=>{
     var pro = await Product.findOne({_id: req.query.id})

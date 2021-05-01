@@ -8,6 +8,12 @@ module.exports.index = async (req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('product', {activepage: 'product' ,layout: './layouts/common', products: products , moment: moment, user:user})
 }
+module.exports.search = async (req, res)=>{
+    var search = req.query.search
+    var products = await Product.find({proName: new RegExp(search.toLowerCase(),'i'),proStatus: true})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('product', {activepage: 'product' ,layout: './layouts/common', products: products , moment: moment, user:user})
+}
 module.exports.adding = async (req, res)=>{
     var cats = await Category.find({status:true})
     var user = await User.findOne({_id:req.signedCookies.userId})
@@ -96,6 +102,12 @@ module.exports.deleting = (req, res)=>{
 }
 module.exports.trash = async (req, res)=>{
     var products = await Product.find({proStatus: false})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('product-trash', {activepage: 'trash' ,layout: './layouts/common', products: products, moment: moment , user:user})
+}
+module.exports.trashSearch = async (req, res)=>{
+    var search = req.query.search
+    var products = await Product.find({proName: new RegExp(search.toLowerCase(),'i'),proStatus: false})
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('product-trash', {activepage: 'trash' ,layout: './layouts/common', products: products, moment: moment , user:user})
 }

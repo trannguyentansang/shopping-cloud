@@ -51,9 +51,9 @@
                 </a>
                 <div class="navbar-inner">
                     <a class="brand" href="/"><img src="/public/static/images/logo.png" alt="Bootsshop" /></a>
-                    <form class="form-inline navbar-search" method="post" action="products.html">
-                        <input class="srchTxt" type="text" />
-                        <select class="srchTxt">
+                    <form class="form-inline navbar-search" method="get" action="/product/search">
+                        <input name="search" class="srchTxt" type="text" />
+                        <select name="cat" class="srchTxt">
                             <option value="all">All</option>
                             <%cats.forEach(cat=>{%>
                                 <option value="<%=cat.id%>"><%=cat.catName%> </option>   

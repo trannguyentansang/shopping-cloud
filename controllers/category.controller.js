@@ -6,6 +6,13 @@ module.exports.index = async (req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('category', {activepage: 'category' ,layout: './layouts/common', cats: categories, user: user})
 }
+module.exports.search = async (req, res)=>{
+    var search = req.query.search
+    var categories = await Category.find({catName: new RegExp(search.toLowerCase(),'i'),status: true})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('category', {activepage: 'category' ,layout: './layouts/common', cats: categories, user: user})
+}
 module.exports.adding = async(req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('handle-category', {action: 'adding', activepage: 'category' ,layout: './layouts/common', user: user })
@@ -114,6 +121,12 @@ module.exports.recover = async (req, res)=>{
 }
 module.exports.trash = async (req, res)=>{
     var categories = await Category.find({status: false})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('category-trash', {activepage: 'cat-trash' ,layout: './layouts/common', cats: categories, user:user})
+}
+module.exports.trashSearch = async (req, res)=>{
+    var search = req.query.search
+    var categories = await Category.find({catName: new RegExp(search.toLowerCase(),'i'),status: false})
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('category-trash', {activepage: 'cat-trash' ,layout: './layouts/common', cats: categories, user:user})
 }

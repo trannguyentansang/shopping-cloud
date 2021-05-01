@@ -8,6 +8,17 @@ module.exports.index = async (req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('order', {activepage: 'order' ,layout: './layouts/common', orders: orders, moment:moment, user:user})
 }
+module.exports.search = async (req, res)=>{
+    var search = req.query.search
+    try{
+        var orders = await Order.find({_id: search})
+        var user = await User.findOne({_id:req.signedCookies.userId})
+        res.render('order', {activepage: 'order' ,layout: './layouts/common', orders: orders, moment:moment, user:user})
+    }catch(err){
+        var user = await User.findOne({_id:req.signedCookies.userId})
+        res.render('order', {activepage: 'order' ,layout: './layouts/common', orders: [], moment:moment, user:user})
+    }
+}
 module.exports.adding = async(req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('add-order', {activepage: 'order' ,layout: './layouts/common' , user:user})

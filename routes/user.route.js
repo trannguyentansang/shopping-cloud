@@ -5,6 +5,7 @@ const upload = require("../controllers/upload")
 var middleware = require('../middlewares/auth.middleware')
 
 router.get('/',middleware.requireAuth, middleware.checkIsAdmin, userController.index)
+router.get('/search',middleware.requireAuth, middleware.checkIsAdmin, userController.search)
 router.get('/adding',middleware.requireAuth, middleware.checkIsAdmin, userController.adding)
 router.post('/adding',middleware.requireAuth, middleware.checkIsAdmin, upload.single("avatar"), userController.postAdding)
 router.get('/editing',middleware.requireAuth, middleware.checkIsAdmin, userController.editing)

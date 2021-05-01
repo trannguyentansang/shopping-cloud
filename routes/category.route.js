@@ -5,6 +5,7 @@ const upload = require("../controllers/upload")
 var middleware = require('../middlewares/auth.middleware')
 
 router.get('/',middleware.requireAuth, middleware.checkIsProductManager, categoryController.index)
+router.get('/search',middleware.requireAuth, middleware.checkIsProductManager, categoryController.search)
 router.get('/adding',middleware.requireAuth, middleware.checkIsProductManager, categoryController.adding)
 router.post('/adding',middleware.requireAuth, middleware.checkIsProductManager, upload.single("catFile"), categoryController.postAdding)
 router.get('/editing',middleware.requireAuth, middleware.checkIsProductManager, categoryController.editing)

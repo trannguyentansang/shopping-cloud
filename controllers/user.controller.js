@@ -8,6 +8,12 @@ module.exports.index = async (req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('user', {activepage: 'user' ,layout: './layouts/common' , users: users, moment:moment, user:user})
 }
+module.exports.search = async (req, res)=>{
+    var search = req.query.search
+    var users = await User.find({$or:[{username: new RegExp(search.toLowerCase(),'i')},{ phone: new RegExp(search.toLowerCase(),'i')}, {fullname: new RegExp(search.toLowerCase(),'i')}, {email: new RegExp(search.toLowerCase(),'i')}]})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('user', {activepage: 'user' ,layout: './layouts/common' , users: users, moment:moment, user:user})
+}
 module.exports.adding = async (req, res)=>{
     var pers = await Permission.find()
     var user = await User.findOne({_id:req.signedCookies.userId})

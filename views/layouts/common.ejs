@@ -81,6 +81,13 @@
 				reader.readAsDataURL(input.files[i]);
 			}
 		})
+        var form = document.getElementById("form-search-admin");
+
+        document.getElementById("btn-search-admin").addEventListener("click", function () {
+            if($("#input_search_admin").val()!==""){
+                form.submit();
+            }
+        });
         
       tinymce.init({
         selector: '#mytextarea'
