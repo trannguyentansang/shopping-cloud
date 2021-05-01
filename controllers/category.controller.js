@@ -50,7 +50,7 @@ module.exports.postEditing = (req, res)=>{
             else{
                 cat.catName = req.body.catName
                 if(req.file){
-                    cat.catImage = req.file.path
+                    cat.catImage = "/"+req.file.path
                 }
                 cat.save((err, cat)=>{
                     if(err){
