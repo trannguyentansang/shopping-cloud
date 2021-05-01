@@ -29,7 +29,7 @@
                         <tbody>
                             <% products.forEach((pro)=>{ %>
                                 <tr>
-                                    <td><%=pro.proName%></td>
+                                    <td ><div class="namePro"><%=pro.proName%></div></td>
                                     <td><%=pro.proPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%></td>
                                     <td><%=pro.proQty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%>
                                         <a href="/admin/product/stockin?id=<%=pro.id%>"><b><i><u>Stock in</u></i></b></a>

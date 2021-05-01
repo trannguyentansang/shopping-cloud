@@ -64,6 +64,7 @@ app.use('/product', productClientRouter)
 app.use('/user', userClientRouter)
 
 //open port
-app.listen(process.env.PORT||3000, ()=>{
-	console.log('this port is listen on port '+process.env.PORT_SERVER)
+var port = process.env.PORT||3000
+app.listen(port, ()=>{
+	console.log('this port is listen on port '+port)
 })

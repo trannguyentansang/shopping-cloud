@@ -14341,4 +14341,10 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 .order-detail-customer td{
   padding-left: 30px;
 }
+.namePro{
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  width: 200px;
+}
 /*# sourceMappingURL=style.css.map */
