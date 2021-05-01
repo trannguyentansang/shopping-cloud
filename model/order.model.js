@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 var orderSchema = new mongoose.Schema({
     customer: {},
-    date: String,
+    date: Date,
     total: Number,
     orderDetails:[],
-    status: Boolean,
+    status: Number,
     shippingFee: Number,
     paymentMethod: String
 });

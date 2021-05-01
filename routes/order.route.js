@@ -3,8 +3,8 @@ var router = express.Router();
 var orderController = require('../controllers/order.controller')
 var middleware = require('../middlewares/auth.middleware')
 
-router.get('/',middleware.requireAuth, orderController.index)
-router.get('/adding',middleware.requireAuth, orderController.adding)
-router.get('/details',middleware.requireAuth, orderController.orderDetails)
-
+router.get('/',middleware.requireAuth, middleware.checkIsOrderManager, orderController.index)
+router.get('/adding',middleware.requireAuth, middleware.checkIsOrderManager, orderController.adding)
+router.get('/details',middleware.requireAuth, middleware.checkIsOrderManager, orderController.orderDetails)
+router.get('/changeStatus',middleware.requireAuth, middleware.checkIsOrderManager, orderController.changeStatus)
 module.exports = router;

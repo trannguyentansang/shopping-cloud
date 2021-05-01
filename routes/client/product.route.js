@@ -7,5 +7,7 @@ router.get('/products-by-category', productController.proByCat)
 router.get('/product-details', productController.productDetails)
 router.post('/addtocart',middleware.requireAuth,middleware.checkIsCustomer, productController.addtocart)
 router.get('/cart',middleware.requireAuth,middleware.checkIsCustomer, productController.cart)
+router.get('/removeItemFromCart',middleware.requireAuth,middleware.checkIsCustomer, productController.removeItemFromCart)
+router.get('/checkout',middleware.requireAuth,middleware.checkIsCustomer, productController.checkout)
 
 module.exports = router;

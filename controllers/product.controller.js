@@ -1,21 +1,23 @@
 const Product = require('../model/product.model')
 const Category = require('../model/category.model')
 const date = require('date-and-time')
+const User = require('../model/user.model')
+const moment = require('moment')
 module.exports.index = async (req, res)=>{
     var products = await Product.find({proStatus: true})
-    res.render('product', {activepage: 'product' ,layout: './layouts/common', products: products })
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('product', {activepage: 'product' ,layout: './layouts/common', products: products , moment: moment, user:user})
 }
 module.exports.adding = async (req, res)=>{
-    var cats = await Category.find()
-    res.render('handle-product', {action: 'adding', activepage: 'product' ,layout: './layouts/common', cats:cats })
+    var cats = await Category.find({status:true})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('handle-product', {action: 'adding', activepage: 'product' ,layout: './layouts/common', cats:cats, user:user })
 }
 module.exports.editing = async(req, res)=>{
-    var cats = await Category.find()
+    var cats = await Category.find({status:true})
     var pro = await Product.find({_id: req.query.id})
-    res.render('handle-product', {action: 'editing', activepage: 'product' ,layout: './layouts/common', cats:cats, pro: pro[0]})
-}
-module.exports.trash = (req, res)=>{
-    res.render('product-trash', {activepage: 'trash' ,layout: './layouts/common' })
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('handle-product', {action: 'editing', activepage: 'product' ,layout: './layouts/common', cats:cats, pro: pro[0], user:user})
 }
 module.exports.postAdding = async (req, res)=>{
     const now  =  new Date();
@@ -94,7 +96,8 @@ module.exports.deleting = (req, res)=>{
 }
 module.exports.trash = async (req, res)=>{
     var products = await Product.find({proStatus: false})
-    res.render('product-trash', {activepage: 'trash' ,layout: './layouts/common', products: products })
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('product-trash', {activepage: 'trash' ,layout: './layouts/common', products: products, moment: moment , user:user})
 }
 module.exports.recover = async (req, res)=>{
     Product.findOne({_id: req.query.id}, async (err, pro)=>{
@@ -111,7 +114,8 @@ module.exports.recover = async (req, res)=>{
 }
 module.exports.stockin = async (req, res)=>{
     Product.findOne({_id: req.query.id}, async (err, pro)=>{
-        res.render("stock-in",{activepage: 'product' ,layout: './layouts/common', pro: pro })
+        var user = await User.findOne({_id:req.signedCookies.userId})
+        res.render("stock-in",{activepage: 'product' ,layout: './layouts/common', pro: pro, user:user })
     })
 }
 module.exports.postStockin = async (req, res)=>{

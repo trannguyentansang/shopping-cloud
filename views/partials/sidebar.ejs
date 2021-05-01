@@ -15,49 +15,64 @@
                             class="ti-home"></i><b>D</b></span><span
                         class="pcoded-mtext">Dashboard</span><span class="pcoded-mcaret"></span></a>
             </li>
-            <% if (activepage==='category') { %> 
-                <li class="active">
-            <% } else{ %>
-                <li>
-            <% }%><a href="/admin/category"><span class="pcoded-micon"><i
-                            class="ti-notepad"></i><b>C</b></span><span
-                        class="pcoded-mtext">Category</span><span class="pcoded-mcaret"></span></a>
-            </li>
-            <% if (activepage==='product') { %> 
-                <li class="active">
-            <% } else{ %>
-                <li>
-            <% }%><a href="/admin/product"><span class="pcoded-micon"><i
-                            class="ti-crown"></i><b>P</b></span><span
-                        class="pcoded-mtext">Product</span><span class="pcoded-mcaret"></span></a>
-            </li>
-            <% if (activepage==='user') { %> 
-                <li class="active">
-            <% } else{ %>
-                <li>
-            <% }%>
-            <a href="/admin/user"><span class="pcoded-micon"><i
-                            class="ti-user"></i><b>U</b></span><span
-                        class="pcoded-mtext">User</span><span class="pcoded-mcaret"></span></a>
-            </li>
-            <% if (activepage==='order') { %> 
-                <li class="active">
-            <% } else{ %>
-                <li>
-            <% }%>
-                <a href="/admin/order"><span class="pcoded-micon"><i
-                            class="ti-clipboard"></i><b>O</b></span><span
-                        class="pcoded-mtext">Order</span><span class="pcoded-mcaret"></span></a>
-            </li>
-            <% if (activepage==='trash') { %> 
-                <li class="active">
-            <% } else{ %>
-                <li>
-            <% }%>
-                <a href="/admin/product/trash"><span class="pcoded-micon"><i
-                            class="ti-trash"></i><b>T</b></span><span
-                        class="pcoded-mtext">Product Trash</span><span class="pcoded-mcaret"></span></a>
-            </li>
+            <%if(user.permission.perName==='PRODUCT_MANAGER'){%>
+                <% if (activepage==='category') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%><a href="/admin/category"><span class="pcoded-micon"><i
+                                class="ti-notepad"></i><b>C</b></span><span
+                            class="pcoded-mtext">Category</span><span class="pcoded-mcaret"></span></a>
+                </li>
+                <% if (activepage==='product') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%><a href="/admin/product"><span class="pcoded-micon"><i
+                                class="ti-crown"></i><b>P</b></span><span
+                            class="pcoded-mtext">Product</span><span class="pcoded-mcaret"></span></a>
+                </li>
+                <% if (activepage==='cat-trash') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%>
+                    <a href="/admin/category/trash"><span class="pcoded-micon"><i
+                                class="ti-trash"></i><b>T</b></span><span
+                            class="pcoded-mtext">Caetgroy Trash</span><span class="pcoded-mcaret"></span></a>
+                </li>
+                <% if (activepage==='trash') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%>
+                    <a href="/admin/product/trash"><span class="pcoded-micon"><i
+                                class="ti-trash"></i><b>T</b></span><span
+                            class="pcoded-mtext">Product Trash</span><span class="pcoded-mcaret"></span></a>
+                </li>
+            <%}%>
+            <%if(user.permission.perName==='ADMIN'){%>
+                <% if (activepage==='user') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%>
+                <a href="/admin/user"><span class="pcoded-micon"><i
+                                class="ti-user"></i><b>U</b></span><span
+                            class="pcoded-mtext">User</span><span class="pcoded-mcaret"></span></a>
+                </li>
+            <%}%>
+            <%if(user.permission.perName==='ORDER_MANAGER'){%>
+                <% if (activepage==='order') { %> 
+                    <li class="active">
+                <% } else{ %>
+                    <li>
+                <% }%>
+                    <a href="/admin/order"><span class="pcoded-micon"><i
+                                class="ti-clipboard"></i><b>O</b></span><span
+                            class="pcoded-mtext">Order</span><span class="pcoded-mcaret"></span></a>
+                </li>    
+            <%}%>
         </ul>
     </div>
 </nav>

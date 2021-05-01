@@ -2,7 +2,7 @@
     <div class="navbar-wrapper">
         <div class="navbar-logo"><a class="mobile-menu" id="mobile-collapse" href="#!"><i
                     class="ti-menu"></i></a><a class="mobile-search morphsearch-search" href="#"><i
-                    class="ti-search"></i></a><a href="index.html"><img class="img-fluid"
+                    class="ti-search"></i></a><a href="/admin"><img class="img-fluid"
                     src="/public/static/images/logo.png" alt="Theme-Logo"></a><a class="mobile-options"><i
                     class="ti-more"></i></a></div>
         <div class="navbar-container container-fluid">
@@ -16,12 +16,12 @@
             </ul>
             <ul class="nav-right">
                 <li class="user-profile header-notification"><a href="#!"><img class="img-radius"
-                            src="/public/static/images/avatar-4.jpg" alt="User-Profile-Image"><span>John
-                            Doe</span><i class="ti-angle-down"></i></a>
+                            src="<%=user.avatar%>" alt="User-Profile-Image"><span><%=user.fullname%></span><i class="ti-angle-down"></i></a>
+                            
                     <ul class="show-notification profile-notification">
-                        <li><a href="#!"><i class="ti-settings"></i> Settings</a></li>
-                        <li><a href="#"><i class="ti-user"></i> Profile</a></li>
-                        <li><a href="auth-normal-sign-in.html"><i class="ti-layout-sidebar-left"></i>
+                        <li><a href="/user/profile"><i class="ti-user"></i>
+                            Profile</a></li>
+                        <li><a href="/auth/logout"><i class="ti-layout-sidebar-left"></i>
                                 Logout</a></li>
                     </ul>
                 </li>

@@ -1,14 +1,17 @@
 const User = require('../model/user.model')
 const Permission = require('../model/permission.model')
 const date = require('date-and-time')
+const moment = require ('moment')
 
 module.exports.index = async (req, res)=>{
     var users = await User.find()
-    res.render('user', {activepage: 'user' ,layout: './layouts/common' , users: users})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('user', {activepage: 'user' ,layout: './layouts/common' , users: users, moment:moment, user:user})
 }
 module.exports.adding = async (req, res)=>{
     var pers = await Permission.find()
-    res.render('handle-user', {action: 'adding', activepage: 'user' ,layout: './layouts/common', pers: pers})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('handle-user', {action: 'adding', activepage: 'user' ,layout: './layouts/common', pers: pers, user:user})
 }
 module.exports.postAdding = async (req, res)=>{
     var pers = await Permission.find({_id: req.body.per})
@@ -39,8 +42,9 @@ module.exports.postAdding = async (req, res)=>{
 }
 module.exports.editing = async(req, res)=>{
     var pers = await Permission.find()
-    var user =  await User.findOne({_id : req.query.id})
-    res.render('handle-user', {action: 'editing', activepage: 'user' ,layout: './layouts/common', pers: pers, user: user})
+    var useredit =  await User.findOne({_id : req.query.id})
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    res.render('handle-user', {action: 'editing', activepage: 'user' ,layout: './layouts/common', pers: pers, user: user, useredit: useredit})
 }
 
 module.exports.postEditing = async (req, res)=>{

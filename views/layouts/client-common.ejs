@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Bootshop online Shopping cart</title>
+    <title>GURU able</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -16,7 +16,7 @@
     <!-- Google-code-prettify -->
     <link href="/public/static/themes/js/google-code-prettify/prettify.css" rel="stylesheet" />
     <!-- fav and touch icons -->
-    <link rel="shortcut icon" href="/public/static/themes/images/ico/favicon.ico">
+    <link rel="shortcut icon" href="/public/static/images/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144"
         href="/public/static/themes/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114"
@@ -32,7 +32,7 @@
             <div id="welcomeLine" class="row">
                 <div class="span6">Welcome!<strong> 
                     <%if(locals.user){%>
-                        <%=user.username%>
+                        <%=user.fullname%>
                     <%}%>
                 </strong></div>
                 <div class="span6">
@@ -50,7 +50,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-inner">
-                    <a class="brand" href="/"><img src="/public/static/themes/images/logo.png" alt="Bootsshop" /></a>
+                    <a class="brand" href="/"><img src="/public/static/images/logo.png" alt="Bootsshop" /></a>
                     <form class="form-inline navbar-search" method="post" action="products.html">
                         <input class="srchTxt" type="text" />
                         <select class="srchTxt">
@@ -106,40 +106,9 @@
         <div class="container">
             <div class="row">
                 <div class="span3">
-                    <h5>ACCOUNT</h5>
-                    <a href="login.html">YOUR ACCOUNT</a>
-                    <a href="login.html">PERSONAL INFORMATION</a>
-                    <a href="login.html">ADDRESSES</a>
-                    <a href="login.html">DISCOUNT</a>
-                    <a href="login.html">ORDER HISTORY</a>
-                </div>
-                <div class="span3">
-                    <h5>INFORMATION</h5>
-                    <a href="contact.html">CONTACT</a>
-                    <a href="register.html">REGISTRATION</a>
-                    <a href="legal_notice.html">LEGAL NOTICE</a>
-                    <a href="tac.html">TERMS AND CONDITIONS</a>
-                    <a href="faq.html">FAQ</a>
-                </div>
-                <div class="span3">
-                    <h5>OUR OFFERS</h5>
-                    <a href="#">NEW PRODUCTS</a>
-                    <a href="#">TOP SELLERS</a>
-                    <a href="special_offer.html">SPECIAL OFFERS</a>
-                    <a href="#">MANUFACTURERS</a>
-                    <a href="#">SUPPLIERS</a>
-                </div>
-                <div id="socialMedia" class="span3 pull-right">
-                    <h5>SOCIAL MEDIA </h5>
-                    <a href="#"><img width="60" height="60" src="/public/static/themes/images/facebook.png" title="facebook"
-                            alt="facebook" /></a>
-                    <a href="#"><img width="60" height="60" src="/public/static/themes/images/twitter.png" title="twitter"
-                            alt="twitter" /></a>
-                    <a href="#"><img width="60" height="60" src="/public/static/themes/images/youtube.png" title="youtube"
-                            alt="youtube" /></a>
+                    <img src="/public/static/images/logo.png">
                 </div>
             </div>
-            <p class="pull-right">&copy; Bootshop</p>
         </div><!-- Container End -->
     </div>
     <!-- Placed at the end of the document so the pages load faster ============================================= -->
@@ -151,8 +120,8 @@
     <script src="/public/static/themes/js/jquery.lightbox-0.5.js"></script>
     <script>
         $(".qty-input").change(function(){
-            var qty = $("#pro-qty").text().replace(/\./g,'')
-            var inputC = this.value
+            var qty = parseInt($("#pro-qty").text().replace(/\./g,''))
+            var inputC = parseInt(this.value)
             if(inputC<=0){
                 this.value = 1
             }

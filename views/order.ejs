@@ -29,21 +29,41 @@
                                 <tr>
                                     <th scope="row"><%=order.id%></th>
                                     <td><%=order.customer.username%></td>
-                                    <td><%=order.date%></td>
-                                    <td><%=order.total%></td>
+                                    <td><%=moment(order.date).format('DD/MM/YYYY HH:MM')%></td>
+                                    <td><%=order.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%></td>
                                     <td> <i><u><a href="/admin/order/details?id=<%=order.id%>">Order details </a></u></i>
                                     </td>
-                                    <td>
-                                        <a href="/admin/order/accept?id=<%=order.id%>">
-                                            <button class="btn btn-block btn-primary">Accept</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="/admin/order/cancel?id=<%=order.id%>">
-                                            <button class="btn btn-block btn-outline-danger"
-                                            onclick="confirm('This product will be moved to trash, you can recover it whenever you want!')">Cancel</button>
-                                        </a>
-                                    </td>
+                                    <%if(order.status==0){%>
+                                        <td>
+                                            <a href="/admin/order/changeStatus?id=<%=order.id%>&status=1">
+                                                <button class="btn btn-block btn-primary">Accept</button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/order/changeStatus?id=<%=order.id%>&status=2">
+                                                <button class="btn btn-block btn-outline-danger"
+                                                onclick="return confirm('This product will be moved to trash, you can recover it whenever you want!')">Cancel</button>
+                                            </a>
+                                        </td>
+                                    <%} else if(order.status==1){%>
+                                        <td style="color: green">
+                                            Accepted
+                                        </td>
+                                        <td>
+                                            <a href="/admin/order/changeStatus?id=<%=order.id%>&status=3">
+                                                <button class="btn btn-block btn-outline-success"
+                                                onclick="return confirm('Complete when customer received and paid!')">Complete</button>
+                                            </a>
+                                        </td>
+                                    <%}else if(order.status==2){%>
+                                        <td colspan="2" style="color: red">
+                                            Canceled
+                                        </td>
+                                    <%}else{%>
+                                        <td colspan="2" style="color: blue">
+                                            Completed
+                                        </td>
+                                    <%}%>
                                 </tr>    
                             <%})%>
                         </tbody>

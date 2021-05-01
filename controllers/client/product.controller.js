@@ -1,9 +1,11 @@
 const Product = require('../../model/product.model')
 const Category = require('../../model/category.model')
 const User = require('../../model/user.model')
+const Order = require('../../model/order.model')
+const date = require('date-and-time')
 
 module.exports.proByCat = async (req, res)=>{
-    var cat = await Category.findOne({_id: req.query.catId})
+    var cat = await Category.findOne({_id: req.query.catId, status: true})
     var pros = await Product.find({category: cat})
     var cats = await Category.find()
     var user = await User.findOne({_id:req.signedCookies.userId})
@@ -11,7 +13,7 @@ module.exports.proByCat = async (req, res)=>{
 }
 module.exports.productDetails = async (req, res)=>{
     var pro = await Product.findOne({_id: req.query.id})
-    var cats = await Category.find()
+    var cats = await Category.find({status:true})
     var relatedPros = await Product.find({category: pro.category}).sort({proSold:'desc'}).limit(6)
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('client/product-details', {layout: './layouts/client-common', cats:cats, pro:pro, relatedPros: relatedPros, cart: req.signedCookies.cart, user: user})
@@ -25,11 +27,15 @@ module.exports.addtocart = async (req, res)=>{
         var cart = req.signedCookies.cart
         var product = await Product.findOne({_id:req.body.proId})
         var ok = false
-        console.log(product.id)
-        console.log(cart)
         cart.forEach(item=>{
             if(item.product._id==product.id){
-                item.qty =parseInt(item.qty) + parseInt(req.body.qty)
+                var temp =parseInt(item.qty) + parseInt(req.body.qty)
+                if(temp>item.product.proQty){
+                    item.qty = item.product.proQty
+                }
+                else{
+                    item.qty = temp
+                }
                 ok= true
             }
         })
@@ -41,8 +47,60 @@ module.exports.addtocart = async (req, res)=>{
     res.redirect('/')
 }
 module.exports.cart = async (req, res)=>{
-    var cats = await Category.find()
+    var cats = await Category.find({status:true})
     var cart = req.signedCookies.cart
     var user = await User.findOne({_id:req.signedCookies.userId})
     res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user})
+}
+module.exports.removeItemFromCart = async (req, res)=>{
+    var cats = await Category.find({status:true})
+    var cart = req.signedCookies.cart
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    cart.splice(req.index,1)
+    res.cookie('cart',cart, {signed: true})
+    res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user})
+}
+module.exports.checkout = async (req, res)=>{
+    var cats = await Category.find({status:true})
+    var cart = req.signedCookies.cart
+    var user = await User.findOne({_id:req.signedCookies.userId})
+    if(user.phone===""||user.email===""||user.fullname===""||user.address===""){
+        res.render('client/change-profile', {layout: './layouts/client-common', cats: cats, cart: req.signedCookies.cart, user: user, error: 'Please fill your information'})
+        return
+    }
+    if(!user.phone||!user.email||!user.fullname||!user.address){
+        res.render('client/change-profile', {layout: './layouts/client-common', cats: cats, cart: req.signedCookies.cart, user: user, error: 'Please fill your information'})
+        return
+    }
+    if(cart.length===0){
+        res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user, error: 'There is not any product to check out!'})
+        return
+    }
+    const now  =  new Date();
+    // Formating the date and time
+    // by using date.format() method
+    const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
+    var total = 0
+    cart.forEach(item=>{
+        total = total + parseInt(item.qty)*parseInt(item.product.proPrice*((100-item.product.proDiscount)/100))
+    })
+    var order = new Order({
+        customer: {...user},
+        date:value,
+        total: total,
+        orderDetails: [...cart],
+        status: 0,
+        shippingFee: 50000,
+        paymentMethod: 'Payment on delivery'
+    })
+    order.save((err, user)=>{
+        if (err){
+            res.status(500).send()
+            return
+        }
+        console.log(order.id + " created!")
+        cart=[]
+        res.cookie('cart',cart, {signed: true})
+        res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user, message: 'Finish order!'})
+    })
 }

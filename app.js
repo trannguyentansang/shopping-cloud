@@ -20,6 +20,7 @@ const fs = require('fs');
 //router
 const homeRouter = require('./routes/home.route');
 const homeClientRouter = require('./routes/client/home.route');
+const userClientRouter = require('./routes/client/user.route');
 const productClientRouter = require('./routes/client/product.route');
 const authRouter = require('./routes/auth.route');
 const categoryRouter = require('./routes/category.route');
@@ -37,7 +38,7 @@ app.use(expressLayouts)
 app.set('view engine', 'ejs');
 app.use(bodyparser.urlencoded({extended:true}))
 app.use(bodyparser.json())
-app.use(cookieParser('aksjdasf5s34fd65sd4f'))
+app.use(cookieParser(process.env.SECRET_KEY))
 try{
 	mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
 	console.log("Database created!")
@@ -60,6 +61,7 @@ app.use('/admin/order', orderRouter)
 //redirect client
 app.use('/', homeClientRouter)
 app.use('/product', productClientRouter)
+app.use('/user', userClientRouter)
 
 //open port
 app.listen(process.env.PORT_SERVER, ()=>{

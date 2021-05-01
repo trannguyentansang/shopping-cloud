@@ -5,26 +5,47 @@
         <!-- Basic table card start-->
         <div class="card">
             <div class="card-header">
-                <h4>Order ID: sadf56f1321sdf82</h4>
-                <span style="color: green; font-weight: bold;">Paid</span>
+                <h4>Order ID: <%=order.id%></h4>
+                    <%if(order.status==0){%>
+                        <span style="color: blue; font-weight: bold;">Pending...</span>
+                        <a href="/admin/order/changeStatus?id=<%=order.id%>&status=1">
+                            <button class="btn btn-primary">Accept</button>
+                        </a>
+                        <a href="/admin/order/changeStatus?id=<%=order.id%>&status=2">
+                            <button class="btn btn-outline-danger"
+                            onclick="return confirm('This product will be moved to trash, you can recover it whenever you want!')">Cancel</button>
+                        </a>
+                    <%} else if(order.status==1){%>
+                        <span style="color: blue; font-weight: bold;">Accepted</span>
+                        <a href="/admin/order/changeStatus?id=<%=order.id%>&status=3">
+                            <button class="btn btn-outline-success"
+                            onclick="return confirm('Complete when customer received and paid!')">Complete</button>
+                        </a>
+                    <%}else if(order.status==2){%>
+                        <span style="color: red; font-weight: bold;">
+                            Canceled
+                        </span>
+                    <%}else{%>
+                        <span style="color: blue; font-weight: bold;">Completed</span>
+                    <%}%>
                 <table class="order-detail-customer">
                     <tr>
                         <th>Customer:</th>
-                        <td>Tran Nguyen Tan Sang</td>
+                        <td><%=order.customer.fullname%></td>
                         <th>| Address: </th>
-                        <td>22, 7 street, Long Phuoc Ward, District 9, HCM</td>
+                        <td><%=order.customer.address%></td>
                     </tr>
                     <tr>
                         <th>Phone Number:</th>
-                        <td>0342280570</td>
+                        <td><%=order.customer.phone%></td>
                         <th>| Email:</th>
-                        <td>sang09685@gmail.com</td>
+                        <td><%=order.customer.email%></td>
                     </tr>
                     <tr>
                         <th>Date:</th>
-                        <td>25/04/2021 13h:01m</td>
+                        <td><%=order.date%></td>
                         <th>| Payment method:</th>
-                        <td>Momo</td>
+                        <td><%=order.paymentMethod%></td>
                     </tr>
                 </table>
             </div>
@@ -33,23 +54,25 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>#</th>
                                 <th></th>
                                 <th>Product</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Discount</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td><img width="100px" src="/public/static/images/avatar-1.jpg"></td>
-                                <td>iPhone Xs Max 64GB</td>
-                                <td>100</td>
-                                <td>11.299.000 VND</td>
-                                <td>1,129,900,000 VND</td>
-                            </tr>
+                            <%order.orderDetails.forEach(item=>{%>
+                                <tr>
+                                    <td><img width="100px" src="<%=item.product.proImage%>"></td>
+                                    <td><%=item.product.proName%></td>
+                                    <td><%=item.qty.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%></td>
+                                    <td><%=item.product.proPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> VND</td>
+                                    <td><%=Math.ceil(item.product.proPrice*((100-item.product.proDiscount)/100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> VND</td>
+                                    <td><%=Math.ceil(item.qty*item.product.proPrice*((100-item.product.proDiscount)/100)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> VND</td>
+                                </tr>    
+                            <%})%>
                         </tbody>
                         <tfoot>
                             <tr>
@@ -60,7 +83,7 @@
                             <tr>
                                 <th colspan="4"></th>
                                 <th >Total:</th>
-                                <td style="color: red; font-size: larger;">1,129,950,000 VND</td>
+                                <td style="color: red; font-size: larger;"><%=(order.total+50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')%> VND</td>
                             </tr>
                         </tfoot>
                     </table>

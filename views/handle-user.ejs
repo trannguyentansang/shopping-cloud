@@ -11,16 +11,16 @@
                                 <h4 class="sub-title"><%= action %> User</h4>
                                 <form action="/admin/user/<%=action%>" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="userId"
-                                        <%if(locals.user){%>
-                                            value="<%=user.id%>"
+                                        <%if(locals.useredit){%>
+                                            value="<%=useredit.id%>"
                                         <%}%>
                                     >
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Full Name</label>
                                         <div class="col-sm-10">
                                             <input name="fullname" type="text" class="form-control"
-                                                <%if(locals.user){%>
-                                                    value="<%=user.fullname%>"
+                                                <%if(locals.useredit){%>
+                                                    value="<%=useredit.fullname%>"
                                                 <%}%>
                                             required>
                                         </div>
@@ -29,8 +29,8 @@
                                         <label class="col-sm-2 col-form-label">Username</label>
                                         <div class="col-sm-10">
                                             <input name="username" type="text" class="form-control"
-                                            <%if(locals.user){%>
-                                                value="<%=user.username%>"
+                                            <%if(locals.useredit){%>
+                                                value="<%=useredit.username%>"
                                             <%}%>
                                             required>
                                         </div>
@@ -39,8 +39,8 @@
                                         <label class="col-sm-2 col-form-label">Email</label>
                                         <div class="col-sm-10">
                                             <input name="email" type="email" class="form-control"
-                                            <%if(locals.user){%>
-                                                value="<%=user.email%>"
+                                            <%if(locals.useredit){%>
+                                                value="<%=useredit.email%>"
                                             <%}%>
                                             required>
                                         </div>
@@ -49,8 +49,8 @@
                                         <label class="col-sm-2 col-form-label">Phone</label>
                                         <div class="col-sm-10">
                                             <input name="phone" type="number" class="form-control"
-                                            <%if(locals.user){%>
-                                                value="<%=user.phone%>"
+                                            <%if(locals.useredit){%>
+                                                value="<%=useredit.phone%>"
                                             <%}%>
                                             required>
                                         </div>
@@ -59,8 +59,8 @@
                                         <label class="col-sm-2 col-form-label">Address</label>
                                         <div class="col-sm-10">
                                             <input name="address" type="text" class="form-control" 
-                                            <%if(locals.user){%>
-                                                value="<%=user.address%>"
+                                            <%if(locals.useredit){%>
+                                                value="<%=useredit.address%>"
                                             <%}%>
                                             required>
                                         </div>
@@ -71,8 +71,8 @@
                                             <select name="per" class="form-control">
                                                 <%pers.forEach((per)=>{%>
                                                     <option value="<%=per.id%>"
-                                                    <%if(locals.user){%>
-                                                        <%if(user.permission._id==per.id){%>
+                                                    <%if(locals.useredit){%>
+                                                        <%if(useredit.permission._id==per.id){%>
                                                             selected
                                                         <%}%>
                                                     <%}%>    
@@ -85,7 +85,7 @@
                                         <label class="col-sm-2 col-form-label">Upload Image</label>
                                         <div class="col-sm-10">
                                             <input id="singlefile" name="avatar" type="file" class="form-control"
-                                                <%if(!locals.user){%>
+                                                <%if(!locals.useredit){%>
                                                     required
                                                 <%}%>
                                             >
@@ -95,8 +95,8 @@
                                         <label class="col-sm-2 col-form-label"></label>
                                         <div class="col-sm-10">
                                             <img width="300px" id="img-file" 
-                                                <%if(locals.user){%>
-                                                    src="<%=user.avatar%>"
+                                                <%if(locals.useredit){%>
+                                                    src="<%=useredit.avatar%>"
                                                 <%}%>
                                             >
                                         </div>
