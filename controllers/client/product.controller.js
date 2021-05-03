@@ -35,8 +35,14 @@ module.exports.productDetails = async (req, res)=>{
 }
 module.exports.addtocart = async (req, res)=>{
     if(!req.signedCookies.cart){
-        var product = await Product.findOne({_id:req.body.proId})
-        res.cookie('cart',[{product: product, qty: req.body.qty}], {signed: true})
+        try{
+            var product = await Product.findOne({_id:req.body.proId})
+            res.cookie('cart',[{product: product.id, qty: req.body.qty}], {signed: true})
+        }
+        catch(err){
+            res.status(500).send()
+            console.log(err)
+        }
     }
     else{
         var cart = req.signedCookies.cart
@@ -55,7 +61,7 @@ module.exports.addtocart = async (req, res)=>{
             }
         })
         if(ok===false){
-            cart.push({product: product, qty: req.body.qty})
+            cart.push({product: product.id, qty: req.body.qty})
         }
         res.cookie('cart',cart, {signed: true})
     }
@@ -64,8 +70,14 @@ module.exports.addtocart = async (req, res)=>{
 module.exports.cart = async (req, res)=>{
     var cats = await Category.find({status:true})
     var cart = req.signedCookies.cart
+    var pros = []
+    cart.forEach(c=>{
+        Product.findOne({_id: c.product}, (err, pro)=>{
+            pros.push({product:pro, qty: c.qty})
+        })
+    })
     var user = await User.findOne({_id:req.signedCookies.userId})
-    res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user})
+    res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user, pros: pros})
 }
 module.exports.removeItemFromCart = async (req, res)=>{
     var cats = await Category.find({status:true})
@@ -73,7 +85,7 @@ module.exports.removeItemFromCart = async (req, res)=>{
     var user = await User.findOne({_id:req.signedCookies.userId})
     cart.splice(req.index,1)
     res.cookie('cart',cart, {signed: true})
-    res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user})
+    res.redirect('/product/cart')
 }
 module.exports.checkout = async (req, res)=>{
     var cats = await Category.find({status:true})
@@ -91,19 +103,25 @@ module.exports.checkout = async (req, res)=>{
         res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user, error: 'There is not any product to check out!'})
         return
     }
+    var pros = []
+    cart.forEach(c=>{
+        Product.findOne({_id: c.product}, (err, pro)=>{
+            pros.push({product:pro, qty: c.qty})
+        })
+    })
     const now  =  new Date();
     // Formating the date and time
     // by using date.format() method
     const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
     var total = 0
-    cart.forEach(item=>{
+    pros.forEach(item=>{
         total = total + parseInt(item.qty)*parseInt(item.product.proPrice*((100-item.product.proDiscount)/100))
     })
     var order = new Order({
         customer: {...user},
         date:value,
         total: total,
-        orderDetails: [...cart],
+        orderDetails: [...pros],
         status: 0,
         shippingFee: 50000,
         paymentMethod: 'Payment on delivery'

@@ -52,8 +52,8 @@
         </tr>
     </table>
     <hr class="soft" />
-    <%if(locals.cart){%>
-        <%if(cart.length>0){%>
+    <%if(locals.pros){%>
+        <%if(pros.length>0){%>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -67,7 +67,7 @@
                 </thead>
                 <tbody>
                     <%var total=0%>
-                        <%cart.forEach(item=>{%>
+                        <%pros.forEach(item=>{%>
                             <tr>
                                 <td> <img width="60" src="<%=item.product.proImage%>" alt="" />
                                     <a href="/product/removeItemFromCart?index=<%=cart.indexOf(item)%>">
