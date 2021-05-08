@@ -71,7 +71,7 @@ module.exports.cart = async (req, res)=>{
     var cats = await Category.find({status:true})
     var cart = req.signedCookies.cart
     var pros = []
-    cart.forEach(c=>{
+    cart.map(c=>{
         Product.findOne({_id: c.product}, (err, pro)=>{
             pros.push({product:pro, qty: c.qty})
         })
@@ -80,13 +80,17 @@ module.exports.cart = async (req, res)=>{
     res.render('client/view-cart', {layout: './layouts/client-common', cats:cats, cart:cart, user: user, pros: pros})
 }
 module.exports.removeItemFromCart = async (req, res)=>{
-    var cats = await Category.find({status:true})
     var cart = req.signedCookies.cart
-    var user = await User.findOne({_id:req.signedCookies.userId})
     cart.splice(req.index,1)
     res.cookie('cart',cart, {signed: true})
     res.redirect('/product/cart')
 }
+async function asyncForEach(array, callback) {
+    for (let index = 0; index < array.length; index++) {
+      await callback(array[index], index, array);
+    }
+}
+const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
 module.exports.checkout = async (req, res)=>{
     var cats = await Category.find({status:true})
     var cart = req.signedCookies.cart
@@ -104,22 +108,26 @@ module.exports.checkout = async (req, res)=>{
         return
     }
     var pros = []
-    cart.forEach(c=>{
-        Product.findOne({_id: c.product}, (err, pro)=>{
-            pros.push({product:pro, qty: c.qty})
+    var total = 0
+    const start = async()=>{
+        await asyncForEach(cart, async (c) => {
+            await waitFor(50);
+            await Product.findOne({_id: c.product}, (err, pro)=>{
+                pros.push({product:pro, qty: c.qty})
+            })
         })
-    })
+        pros.forEach(item=>{
+            total = total + parseInt(item.qty)*parseInt(item.product.proPrice*((100-item.product.proDiscount)/100))
+        })
+    }
+    await start()
+    console.log(pros)
     const now  =  new Date();
     // Formating the date and time
     // by using date.format() method
-    const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
-    var total = 0
-    pros.forEach(item=>{
-        total = total + parseInt(item.qty)*parseInt(item.product.proPrice*((100-item.product.proDiscount)/100))
-    })
     var order = new Order({
         customer: {...user},
-        date:value,
+        date: now,
         total: total,
         orderDetails: [...pros],
         status: 0,

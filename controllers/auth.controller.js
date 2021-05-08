@@ -51,9 +51,6 @@ module.exports.postRegister = async (req, res)=>{
             return
         }
         const now  =  new Date();
-        // Formating the date and time
-        // by using date.format() method
-        const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
         var pers = await Permission.find({_id: '608b81e641e21a5a37b902c9'})
         var per = pers[0]
         var newuser = new User({
@@ -61,7 +58,7 @@ module.exports.postRegister = async (req, res)=>{
             password:password,
             status: true,
             permission: {...per},
-            joined: value,
+            joined: now,
             avatar: '/public/static/images/default-avatar.png'
         })
         newuser.save((err, newuser)=>{

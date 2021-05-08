@@ -23,9 +23,6 @@ module.exports.postAdding = async (req, res)=>{
     var pers = await Permission.find({_id: req.body.per})
     var per = pers[0]
     const now  =  new Date();
-    // Formating the date and time
-    // by using date.format() method
-    const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
     var newuser = new User({
         username: req.body.username,
         fullname: req.body.fullname,
@@ -35,7 +32,7 @@ module.exports.postAdding = async (req, res)=>{
         status: true,
         permission: {...per},
         avatar: "/"+req.file.path,
-        joined: value
+        joined: now
     })
     newuser.save((err, newuser)=>{
         if (err){
