@@ -9,7 +9,8 @@ var userSchema = new mongoose.Schema({
     permission: {},
     avatar: String,
     joined: String,
-    password:String
+    password:String,
+    branch: {}
 });
 
 const User = mongoose.model('User', userSchema, 'user')

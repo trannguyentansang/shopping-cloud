@@ -14,7 +14,8 @@ var proSchema = new mongoose.Schema({
     proDiscount: Number,
     proDescription: String,
     proLike: Number,
-    proComment: []
+    proComment: [],
+    seller: {}
 });
 
 const Product = mongoose.model('Product', proSchema, 'product')

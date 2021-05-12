@@ -30,7 +30,7 @@
                                     <td><%=user.username%></td>
                                     <td><%=user.fullname%></td>
                                     <td><%=user.phone%></td>
-                                    <td><%=user.joined%></td>
+                                    <td><%=moment(user.joined).format('DD/MM/YYYY HH:MM')%></td>
                                     <td><img width="100px" src="<%=user.avatar%>"></td>
                                     <td>
                                         <a href="/admin/user/editing?id=<%=user.id%>">

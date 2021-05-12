@@ -93,6 +93,16 @@
             tinymce.init({
                 selector: '#mytextarea'
             });
+            $("#staff-per").change(function(){
+                var id = $(this).val()
+                    if(id!="608b81c041e21a5a37b902c7"){
+                       $("#staff-branch").hide() 
+                    }
+                    else{
+                        $("#staff-branch").show() 
+                    }
+                
+            })
         </script>
 </body>
 

@@ -31,6 +31,7 @@ module.exports.postAdding = async (req, res)=>{
     // by using date.format() method
     const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
     var category = await Category.find({_id: req.body.category})
+    var user = await User.findOne({_id:req.signedCookies.userId})
     var cat = category[0]
     var newpro = new Product({
         proName: req.body.proName,
@@ -47,7 +48,8 @@ module.exports.postAdding = async (req, res)=>{
         proRating: 0,
         proSearch: 0,
         proLike: 0,
-        proComment:null
+        proComment:null,
+        seller: {...user}
     })
     newpro.save((err, newpro)=>{
         if (err){
@@ -66,12 +68,14 @@ module.exports.postEditing = (req, res)=>{
         const value = date.format(now,'YYYY/MM/DD HH:mm:ss');
         var category = await Category.find({_id: req.body.category})
         var cat = category[0]
+        var user = await User.findOne({_id:req.signedCookies.userId})
         pro.proName= req.body.proName
         pro.proPrice= req.body.proPrice
         pro.category= {...cat}
         pro.proDiscount= req.body.proDiscount
         pro.proDescription= req.body.proDescription
         pro.proDateModified= value
+        pro.seller = {...user}
         if (req.file){
             if (req.file.path!==""){
                 pro.proImage = "/"+req.file.path

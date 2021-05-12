@@ -111,7 +111,7 @@ module.exports.checkout = async (req, res)=>{
     var total = 0
     const start = async()=>{
         await asyncForEach(cart, async (c) => {
-            await waitFor(50);
+            await waitFor(200);
             await Product.findOne({_id: c.product}, (err, pro)=>{
                 pros.push({product:pro, qty: c.qty})
             })
@@ -132,7 +132,7 @@ module.exports.checkout = async (req, res)=>{
         orderDetails: [...pros],
         status: 0,
         shippingFee: 50000,
-        paymentMethod: 'Payment on delivery'
+        paymentMethod: 'Payment on delivery',
     })
     order.save((err, user)=>{
         if (err){
