@@ -20,6 +20,15 @@
                             class="ti-home"></i><b>D</b></span><span
                         class="pcoded-mtext">Dashboard</span><span class="pcoded-mcaret"></span></a>
             </li>
+            <% if (activepage==='report') { %> 
+                <li class="active">
+            <% } else{ %>
+                <li>
+            <% }%>
+                <a href="/admin/report"><span class="pcoded-micon"><i
+                            class="ti-home"></i><b>R</b></span><span
+                        class="pcoded-mtext">Report</span><span class="pcoded-mcaret"></span></a>
+            </li>
             <%if(user.permission.perName==='PRODUCT_MANAGER'){%>
                 <% if (activepage==='category') { %> 
                     <li class="active">
